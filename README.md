@@ -3,6 +3,7 @@ A simple website that allows you to upload files to Discord's CDN without having
 
 ## Prerequisites
 [Node.js](https://nodejs.org/)
+
 [Git](https://git-scm.com/downloads) (optional)
 
 ## Installation
