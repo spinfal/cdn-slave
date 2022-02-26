@@ -7,7 +7,7 @@ const ejs = require('ejs');
 const express = require('express');
 
 /* global variables */
-const Global = require('./global.js').config;
+const Global = require('./Global.js').config;
 const app = express();
 const client = new Discord.Client();
 
