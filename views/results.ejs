@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>CDN Slave</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style type="text/tailwindcss">
+            @layer utilities {
+                body {
+                    background-color: #e1e4ed;
+                }
+                .hidden {
+                    display: none;
+                }
+                ::-webkit-file-upload-button {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mx-auto">
+            <div class="flex flex-col items-center justify-center h-screen">
+                <div class="w-full max-w-md">
+                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <div class="mb-4">
+                            <h1 class="text-2xl font-semibold text-center">File URLs</h1>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="-mx-3 mb-3">
+                                <div class="px-3 md:mb-0">
+                                    <p class="break-all mb-6">CDN URL: <a class="text-blue-700" href="<%= url %>" rel="noreferrer" target="_blank">view</a></p>
+                                    <p class="break-all">Proxy URL: <a class="text-blue-700" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

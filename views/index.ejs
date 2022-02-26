@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>CDN Slave</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style type="text/tailwindcss">
+            @layer utilities {
+                body {
+                    background-color: #e1e4ed;
+                }
+                .hidden {
+                    display: none;
+                }
+                ::-webkit-file-upload-button {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container mx-auto">
+            <div class="flex flex-col items-center justify-center h-screen">
+                <div class="w-full max-w-md">
+                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <div class="mb-4">
+                            <h1 class="text-2xl font-semibold text-center">CDN Slave</h1>
+                            <p class="text-center text-gray-700/80 text-sm">Because Discord is our new CDN slave</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="-mx-3 mb-3">
+                                <div class="px-3 md:mb-0">
+                                    <form action="/api/upload" method="post" enctype="multipart/form-data">
+                                        <div class="flex flex-col items-center">
+                                            <form action="/api/upload" enctype="multipart/form-data">
+                                                <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Choose a file</label>
+                                                <input type="file" name="file" id="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                                <p class="text-gray-700/75 text-sm"><em>Maximum file size: 10MB</em></p>
+                                                <button type="submit" class="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
+                                                <p class="text-red-800/75 text-sm">I can see everything you upload, don't be dumb</p>
+                                            </form>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
