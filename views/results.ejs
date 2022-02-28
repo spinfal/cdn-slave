@@ -40,7 +40,7 @@
                         </div>
                         <div class="flex flex-col items-center">
                             <div class="-mx-3 mb-3">
-                                <div class="px-3 md:mb-0">
+                                <div class="px-3 md:mb-0 text-center">
                                     <p class="break-all mb-6">CDN URL: <a class="text-blue-700" href="<%= url %>" rel="noreferrer" target="_blank">view</a></p>
                                     <p class="break-all">Proxy URL: <a class="text-blue-700" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a></p>
                                 </div>
@@ -48,6 +48,15 @@
                         </div>
                     </div>
                 </div>
+                <footer class="p-4 bg-white rounded shadow-md md:flex md:items-center md:justify-between md:p-6 container w-full max-w-md">
+                    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"><%= uploadDate %>
+                    </span>
+                    <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
+                        <li>
+                            <p class="text-sm text-gray-500 sm:text-center dark:text-gray-400"><%= fileType %></p>
+                        </li>
+                    </ul>
+                </footer>
             </div>
         </div>
     </body>

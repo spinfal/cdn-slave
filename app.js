@@ -3,6 +3,8 @@ const Discord = require('discord.js');
 const { MessageAttachment } = require('discord.js');
 const cookieParser = require('cookie-parser');
 const fileUpload = require("express-fileupload");
+const moment = require('moment');
+const tz = require('moment-timezone');
 const ejs = require('ejs');
 const express = require('express');
 
@@ -39,7 +41,9 @@ app.get('/results', (req, res) => {
     const cookies = req.cookies;
     res.render('results', {
         url: cookies.url,
-        proxyURL: cookies.proxyURL
+        proxyURL: cookies.proxyURL,
+        uploadDate: cookies.uploaded,
+        fileType: cookies.mime
     });
 });
 
@@ -53,7 +57,7 @@ app.post('/api/upload', async (req, res) => {
         if (message.author.id !== client.user.id) return;
         if (message.channel.id !== Global.fileChannel) return;
         if (!message.attachments.first()) return;
-        setCookies(res, message).then(() => {
+        setCookies(req, res, message).then(() => {
             res.redirect('/results');
         }).catch(err => console.log(err));
     })
@@ -65,10 +69,12 @@ app.listen(Global.port, () => {
     client.login(Global.token);
 });
 
-function setCookies(res, message) {
+function setCookies(req, res, message) {
     return new Promise((resolve, reject) => {
-        res.cookie('url', message.attachments.first()?.url, { maxAge: 900000 });
-        res.cookie('proxyURL', message.attachments.first()?.proxyURL, { maxAge: 900000 });
+        res.cookie('url', message.attachments.first()?.url);
+        res.cookie('proxyURL', message.attachments.first()?.proxyURL);
+        res.cookie('uploaded', moment.tz('America/Los_Angeles').format("[File uploaded on ] LL [PST]"));
+        res.cookie('mime', req.files.file.mimetype)
         resolve();
     });
 }
