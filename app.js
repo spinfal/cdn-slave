@@ -50,6 +50,7 @@ app.post('/api/upload', async (req, res) => {
     const attachment = new MessageAttachment(buffer, req.files.file.name);
     client.channels.cache.get(Global.fileChannel).send(attachment);
     client.on('message', message => {
+        if (message.author.id !== client.user.id) return;
         if (message.channel.id !== Global.fileChannel) return;
         if (!message.attachments.first()) return;
         setCookies(res, message).then(() => {
