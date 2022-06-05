@@ -46,8 +46,8 @@
                                     <form action="/api/upload" method="post" enctype="multipart/form-data">
                                         <div class="flex flex-col items-center">
                                             <form action="/api/upload" enctype="multipart/form-data">
-                                                <label for="file" class="block text-gray-700 text-sm font-bold mb-2">Choose a file</label>
-                                                <input type="file" name="file" id="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                                <label for="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer">Choose a file</label>
+                                                <input onchange="window.label.innerText = this.files[0].name" type="file" name="file" id="file" style="display: none;" required>
                                                 <p class="text-gray-700/75 text-sm"><em>Maximum file size: 8MB</em></p>
                                                 <button type="submit" class="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
                                                 <p class="text-red-800/75 text-sm">I can see everything you upload, don't be dumb</p>
@@ -70,5 +70,26 @@
                 </footer>
             </div>
         </div>
+        <script>
+            const button = document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form > div > button");
+            const tip = document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form > div > p.text-red-800\\/75.text-sm");
+            window.label = document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form > div > label");
+            
+            document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form").addEventListener("submit", (e) => {
+                const file = document.querySelector("#file");
+                if (file.files[0]) {
+                    if (file.files[0].size >= 8000000) {
+                        e.preventDefault();
+                        return tip.innerText = "Your file is over 8mb!";
+                    }
+                    button.classList.remove("bg-blue-500");
+                    button.classList.remove("hover:bg-blue-700");
+                    button.classList.add("bg-gray-500");
+                    button.disabled = true;
+                    button.innerText = "Uploading...";
+                    setTimeout(() => button.innerText = "Must be a big file...", 9000);
+                }
+            });
+        </script>
     </body>
 </html>

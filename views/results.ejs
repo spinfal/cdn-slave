@@ -29,6 +29,46 @@
                 }
             }
         </style>
+        <style>
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black;
+            }
+            
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+            
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+            
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+            </style>
     </head>
     <body>
         <div class="container mx-auto">
@@ -42,7 +82,10 @@
                             <div class="-mx-3 mb-3">
                                 <div class="px-3 md:mb-0 text-center">
                                     <p class="break-all mb-6">CDN URL: <a class="text-blue-700" href="<%= url %>" rel="noreferrer" target="_blank">view</a></p>
-                                    <p class="break-all">Proxy URL: <a class="text-blue-700" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a></p>
+<!--                                     <p class="break-all">Proxy URL: <a class="text-blue-700" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a></p> -->
+                                    <div class="tooltip">Proxy URL: <a class="text-blue-700" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a>
+                                        <span class="tooltiptext">Media URL may not be availble for all files</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +96,7 @@
                     </span>
                     <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
                         <li>
-                            <p class="text-sm text-gray-500 sm:text-center dark:text-gray-400"><%= fileType %></p>
+                            <a href="https://duckduckgo.com/?q=<%= fileType %>ta"><p class="text-sm text-gray-500 sm:text-center dark:text-gray-400"><%= fileType %></p></a>
                         </li>
                     </ul>
                 </footer>
