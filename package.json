@@ -26,7 +26,7 @@
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
     "moment": "^2.29.4",
-    "moment-timezone": "^0.5.34"
+    "moment-timezone": "^0.5.35"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
