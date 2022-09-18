@@ -38,18 +38,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/results', (req, res) => {
-    const cookies = req.cookies;
+    const uploadResults = req.cookies.results;
+  
     res.render('results', {
-        url: cookies.url,
-        proxyURL: cookies.proxyURL,
-        uploadDate: cookies.uploaded,
-        fileType: cookies.mime
+        url: uploadResults.cdn,
+        proxyURL: uploadResults.proxy,
+        uploadDate: uploadResults.uploaded,
+        fileType: uploadResults.mime
     });
 });
 
 app.post('/api/upload', async (req, res) => {
     if (!req.files) return res.status(400).send('No files were provided.');
-    if (req.files.file.size >= 8000000) return res.status(413).send('File too large. Discord is so generous, so generous in fact that they give everyone a whole 8MB limit! If you have a file bigger than that, then try something else as this will not work.');
+    if (req.files.file.size > 8000000) return res.status(413).send('File too large. Discord is so generous, so generous in fact that they give everyone a whole 8MB limit! If you have a file bigger than that, then try something else as this will not work.');
     const buffer = Buffer.from(req.files.file.data);
     const attachment = new MessageAttachment(buffer, req.files.file.name);
     client.channels.cache.get(Global.fileChannel).send(attachment);
@@ -57,10 +58,11 @@ app.post('/api/upload', async (req, res) => {
         if (message.author.id !== client.user.id) return;
         if (message.channel.id !== Global.fileChannel) return;
         if (!message.attachments.first()) return;
+        if (req.headers['upload-source'] === 'API') return res.send(message.attachments.first()?.url);
         setCookies(req, res, message).then(() => {
             res.redirect('/results');
         }).catch(err => console.log(err));
-    })
+    });
 }); 
 
 app.listen(Global.port, () => {
@@ -71,10 +73,12 @@ app.listen(Global.port, () => {
 
 function setCookies(req, res, message) {
     return new Promise((resolve, reject) => {
-        res.cookie('url', message.attachments.first()?.url);
-        res.cookie('proxyURL', message.attachments.first()?.proxyURL);
-        res.cookie('uploaded', moment.tz('America/Los_Angeles').format("[File uploaded on ] LL [PST]"));
-        res.cookie('mime', req.files.file.mimetype)
+        res.cookie('results', {
+          cdn: message.attachments.first()?.url,
+          proxy: message.attachments.first()?.proxyURL,
+          uploaded: moment.tz('America/Los_Angeles').format("[File uploaded on ] LL [PST]"),
+          mime: req.files.file.mimetype
+        });
         resolve();
     });
 }
