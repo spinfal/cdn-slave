@@ -43,7 +43,7 @@ The website will be up @ http://localhost:443 (unless you've changed the config)
 Files uploaded on the site will be available in the channel that you set in `Global.js`
 
 ## Usage with ShareX
-CDN Slave can also be used with [ShareX](https://getsharex.com/)! Follow these steps to get it working (don't want to follow steps? [click here to download the config](https://cdn.spin.rip/r/CDN_Slave_(Discord_CDN).sxcu)):
+CDN Slave can also be used with [ShareX](https://getsharex.com/)! Follow these steps to get it working (don't want to follow steps? [click here to download the config](https://cdn.spin.rip/r/CDN-Slave_(Discord_CDN).sxcu)):
 
 1. Copy the upload endpoint. If using localhost it will be `http://localhost:443/api/upload`, or if you're using my instance it will be `https://cdn-slave.spin.rip/api/upload`
 2. Open ShareX and go to `Destinations` > `Custom uploader settings` > Click `New`
