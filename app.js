@@ -50,7 +50,7 @@ app.get('/results', (req, res) => {
 
 app.post('/api/upload', async (req, res) => {
     if (!req.files) return res.status(400).send('No files were provided.');
-    if (req.files.file.size > 8000000) return res.status(413).send('File too large. Discord is so generous, so generous in fact that they give everyone a whole 8MB limit! If you have a file bigger than that, then try something else as this will not work.');
+    if (req.files.file.size > 26214400) return res.status(413).send('File too large. Discord is so generous, so generous in fact that they give everyone a whole 25MB limit! If you have a file bigger than that, then try something else as this will not work.');
     const buffer = Buffer.from(req.files.file.data);
     const attachment = new MessageAttachment(buffer, req.files.file.name);
     client.channels.cache.get(Global.fileChannel).send(attachment);
