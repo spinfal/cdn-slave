@@ -31,7 +31,7 @@
             }
         </style>
     </head>
-    <body>
+    <body class="px-2">
         <div class="container mx-auto">
             <div class="flex flex-col items-center justify-center h-screen">
                 <div class="w-full max-w-md">
@@ -43,52 +43,84 @@
                         <div class="flex flex-col items-center">
                             <div class="-mx-3 mb-3">
                                 <div class="px-3 md:mb-0">
-                                    <form action="/api/upload" method="post" enctype="multipart/form-data">
-                                        <div class="flex flex-col items-center">
-                                            <form action="/api/upload" enctype="multipart/form-data">
-                                                <label for="file" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer">Choose a file</label>
-                                                <input onchange="window.label.innerText = this.files[0].name" type="file" name="file" id="file" style="display: none;" required>
-                                                <p class="text-gray-700/75 text-sm"><em>Maximum file size: 25MB</em></p>
-                                                <button type="submit" class="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
-                                                <p class="text-red-800/75 text-sm">I can see everything you upload, don't be dumb</p>
-                                            </form>
-                                        </div>
-                                    </form>
+                                    <div class="flex flex-col items-center">
+                                        <form id="upload-form" enctype="multipart/form-data" class="w-full">
+                                            <label for="file" id="fileLabel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer">Choose a file</label>
+                                            <input onchange="window.label.innerText = this.files[0].name" type="file" name="file" id="file" style="display: none;" required>
+                                            <p class="text-gray-700/75 text-sm"><em>Maximum file size: ~<%= humanFileSize %></em></p>
+                                            <button type="button" id="upload-btn" class="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
+                                            <p class="text-red-800/75 text-sm">I can see everything you upload, don't be dumb</p>
+                                            <!-- Progress Bar -->
+                                            <div class="mt-3 w-full bg-gray-300">
+                                                <div id="progress-bar" class="h-2 bg-blue-500" style="width: 0%;"></div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <footer class="p-4 bg-white rounded shadow-md md:flex md:items-center md:justify-between md:p-6 container w-full max-w-md">
-                    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">Made with hate by <a href="https://spin.rip/" class="hover:underline" target="_blank">Spinfal</a>
-                    </span>
-                    <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
-                        <li>
-                            <a href="https://github.com/spinfal/cdn-slave" class="text-sm text-gray-500 hover:underline dark:text-gray-400" target="_blank">Source Code</a>
-                        </li>
-                    </ul>
-                </footer>
             </div>
         </div>
         <script>
-            const button = document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form > div > button");
-            const tip = document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form > div > p.text-red-800\\/75.text-sm");
-            window.label = document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form > div > label");
-            
-            document.querySelector("body > div > div > div > div > div.flex.flex-col.items-center > div > div > form").addEventListener("submit", (e) => {
-                const file = document.querySelector("#file");
-                if (file.files[0]) {
-                    if (file.files[0].size >= 8000000) {
-                        e.preventDefault();
-                        return tip.innerText = "Your file is over 25mb!";
-                    }
-                    button.classList.remove("bg-blue-500");
-                    button.classList.remove("hover:bg-blue-700");
-                    button.classList.add("bg-gray-500");
-                    button.disabled = true;
-                    button.innerText = "Uploading...";
-                    setTimeout(() => button.innerText = "Must be a big file...", 6500);
+            const phrases = [
+              "Must be a big file...",
+              "Discord will love this...",
+              "Still going...",
+              "meow...",
+              "Petting the cats...",
+              "Churning the gears...",
+              "Just a moment longer...",
+              "Is it tea time yet?",
+              "Loading pixels...",
+              "Waking up the hamsters...",
+              "Cranking the handle...",
+              "Setting up the stage...",
+              "Baking cookies...",
+              "Spinning the wheel...",
+              "Reeling in the fish...",
+              "Consulting the oracle...",
+            ];
+            const uploadBtn = document.getElementById("upload-btn");
+            const uploadForm = document.getElementById("upload-form");
+            const progressBar = document.getElementById("progress-bar");
+            window.label = document.getElementById("fileLabel");
+
+            uploadBtn.addEventListener('click', function () {
+                const fileInput = document.getElementById('file');
+                const file = fileInput.files[0];
+                if (!file) {
+                    return;
                 }
+                if (file.size >= <%= byteFileSize %>) {
+                    return tip.innerText = "Your file is over <%= humanFileSize %>!";
+                }
+                uploadBtn.classList.remove("bg-blue-500");
+                uploadBtn.classList.remove("hover:bg-blue-700");
+                uploadBtn.classList.add("bg-gray-500");
+                uploadBtn.disabled = true;
+                uploadBtn.innerText = "Uploading...";
+                setInterval(() => uploadBtn.innerText = phrases[Math.floor(Math.random() * phrases.length)], 7000);
+
+                let formData = new FormData(uploadForm);
+                let request = new XMLHttpRequest();
+
+                request.upload.addEventListener('progress', function (e) {
+                    let percent_complete = (e.loaded / e.total)*100;
+                    progressBar.style.width = percent_complete + '%';
+                });
+
+                request.addEventListener('load', function(e) {
+                    if(request.status == 200){
+                        location.href = '/results';
+                    } else {
+                        alert('Upload failed');
+                    }
+                });
+
+                request.open('post', '/api/upload');
+                request.send(formData);
             });
         </script>
     </body>

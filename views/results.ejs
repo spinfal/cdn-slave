@@ -70,7 +70,7 @@
             }
             </style>
     </head>
-    <body>
+    <body class="px-2">
         <div class="container mx-auto">
             <div class="flex flex-col items-center justify-center h-screen">
                 <div class="w-full max-w-md">
@@ -96,7 +96,7 @@
                     </span>
                     <ul class="flex flex-wrap items-center mt-3 sm:mt-0">
                         <li>
-                            <a href="https://duckduckgo.com/?q=<%= fileType %>" target="_blank" rel="noreferrer"><p class="text-sm text-gray-500 sm:text-center dark:text-blue-400 hover:underline decoration-dotted"><%= fileType %></p></a>
+                            <a href="https://mimeapplication.net/<%= fileType.split('/')[1] %>" target="_blank" rel="noreferrer"><p class="text-sm text-gray-500 sm:text-center dark:text-blue-400 hover:underline decoration-dotted"><%= fileType %></p></a>
                         </li>
                     </ul>
                 </footer>
