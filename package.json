@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
+    "start": "npx tailwindcss -i ./development/tailwind.css -o ./public/css/index.css -m && node app.js",
     "dev": "nodemon app.js"
   },
   "repository": {
