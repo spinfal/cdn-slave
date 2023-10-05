@@ -1,3 +1,6 @@
+![CDN Slave status](https://status.spin.rip/api/badge/9/status?style=for-the-badge)
+![CDN Slave uptime](https://status.spin.rip/api/badge/9/uptime/48?labelPrefix=CDN-Slave+&style=for-the-badge)
+
 # CDN Slave
 A simple website that allows you to upload files to Discord's CDN without having to do it in their app.
 
