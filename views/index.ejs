@@ -33,32 +33,25 @@
     </head>
     <body class="px-2">
         <div class="container mx-auto">
-            <div class="flex flex-col items-center justify-center h-screen">
+            <div class="flex flex-col items-center justify-center min-h-screen">
                 <div class="w-full max-w-md">
-                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                        <div class="mb-4">
-                            <h1 class="text-2xl font-semibold text-center">CDN Slave</h1>
-                            <p class="text-center text-gray-700/80 text-sm">Because Discord is our new CDN slave</p>
+                    <div class="bg-white shadow-md rounded pt-6 pb-8 mb-4">
+                        <div class="mb-4 text-center">
+                            <h1 class="text-2xl font-semibold">CDN Slave</h1>
+                            <p class="text-gray-700 text-sm">Because Discord is our new CDN slave</p>
+                            <a href="https://blog.spin.rip/discord-cdn-changes/" target="_blank" class="mt-2 inline-block text-red-500 hover:text-red-600 px-2 py-1 bg-red-200 hover:bg-red-300 rounded-md cursor-pointer"><strong>IMPORTANT ANNOUNCEMENT</strong></a>
                         </div>
-                        <div class="flex flex-col items-center">
-                            <div class="-mx-3 mb-3">
-                                <div class="px-3 md:mb-0">
-                                    <div class="flex flex-col items-center">
-                                        <form id="upload-form" enctype="multipart/form-data" class="w-full">
-                                            <label for="file" id="fileLabel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer">Choose a file</label>
-                                            <input onchange="window.label.innerText = this.files[0].name" type="file" name="file" id="file" style="display: none;" required>
-                                            <p class="text-gray-700/75 text-sm"><em>Maximum file size: ~<%= humanFileSize %></em></p>
-                                            <button type="button" id="upload-btn" class="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Upload</button>
-                                            <p class="text-red-800/75 text-sm">I can see everything you upload, don't be dumb</p>
-                                            <!-- Progress Bar -->
-                                            <div class="mt-3 w-full bg-gray-300">
-                                                <div id="progress-bar" class="h-2 bg-blue-500" style="width: 0%;"></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                        <form id="upload-form" enctype="multipart/form-data" class="flex flex-col items-center px-8">
+                            <label for="file" id="fileLabel" class="block shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline cursor-pointer">Choose a file</label>
+                            <input onchange="window.label.innerText = this.files[0].name" type="file" name="file" id="file" class="hidden" required>
+                            <p class="text-gray-700/75 text-sm mt-1"><em>Maximum file size: ~<%= humanFileSize %></em></p>
+                            <button type="button" id="upload-btn" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-1/2">Upload</button>
+                            <p class="text-red-800 text-sm mt-2">I can see everything you upload, don't be dumb</p>
+                            <!-- Progress Bar -->
+                            <div class="mt-3 w-full bg-gray-300 rounded">
+                                <div id="progress-bar" class="h-2 bg-blue-500 rounded" style="width: 0%;"></div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
