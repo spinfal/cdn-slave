@@ -75,17 +75,20 @@
             <div class="flex flex-col items-center justify-center h-screen">
                 <div class="w-full max-w-md">
                     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                        <div class="mb-4">
+                        <div class="flex flex-col items-center mb-4">
                             <h1 class="text-2xl font-semibold text-center">File URLs</h1>
+                            <div class="tooltip text-sm">Message ID: <strong><%= messageId %></strong>
+                                <span class="tooltiptext">This is used to refetch new CDN URLs if they expire</span>
+                            </div>
                         </div>
                         <div class="flex flex-col items-center">
                             <div class="-mx-3 mb-3">
-                                <div class="px-3 md:mb-0 text-center">
-                                    <p class="break-all mb-6">CDN URL: <a class="text-blue-700 hover:underline decoration-dotted" href="<%= url %>" rel="noreferrer" target="_blank">view</a></p>
-<!--                                     <p class="break-all">Proxy URL: <a class="text-blue-700" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a></p> -->
+                                <div class="flex flex-col gap-4 px-3 md:mb-0 text-center">
+                                    <p class="break-all">CDN URL: <a class="text-blue-700 hover:underline decoration-dotted" href="<%= url %>" rel="noreferrer" target="_blank">view</a></p>
                                     <div class="tooltip">Proxy URL: <a class="text-blue-700 hover:underline decoration-dotted" href="<%= proxyURL %>" rel="noreferrer" target="_blank">view</a>
-                                        <span class="tooltiptext">Media URL may not be availble for all files</span>
+                                        <span class="tooltiptext text-sm">Media URL may not be availble for all files</span>
                                     </div>
+                                    <p class="break-all">Custom URL: <a class="text-blue-700 hover:underline decoration-dotted" href="<%= customURL %>" rel="noreferrer" target="_blank">view</a></p>
                                 </div>
                             </div>
                         </div>
