@@ -81,21 +81,36 @@ app.get('/attachments/:messageId/:attachmentId/:filename', async (req, res) => {
                 if (!cdnUrl) {
                     return res.status(404).send('CDN URL not found for the given message.');
                 }
-                axios.get(cdnUrl, { responseType: 'stream' })
-                    .then(response => {
+        axios.get(cdnUrl, { responseType: 'stream' })
+                .then(response => {
+                    // Check for range header
+                    let range = req.headers.range;
+                    if (range) {
+                        const parts = range.replace(/bytes=/, "").split("-");
+                        const start = parseInt(parts[0], 10);
+                        const end = parts[1] ? parseInt(parts[1], 10) : response.data.size - 1;
+                        const chunksize = (end - start) + 1;
+
+                        res.writeHead(206, { // Partial content
+                            'Content-Range': `bytes ${start}-${end}/${response.data.size}`,
+                            'Accept-Ranges': 'bytes',
+                            'Content-Length': chunksize,
+                            'Content-Type': response.headers['content-type'],
+                            'Content-Disposition': `attachment; filename="${filename}"`,
+                        });
+
+                        response.data.pipe(res);
+                    } else {
                         res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
                         res.setHeader('Content-Type', response.headers['content-type']);
                         response.data.pipe(res);
-                    })
-                    .catch(error => {
-                        console.error('Error streaming file from CDN:', error);
-                        res.status(500).send('Internal Server Error');
-                    });
-            })
-            .catch(error => {
-                console.error('Error fetching message:', error);
-                res.status(500).send('Internal Server Error');
-            });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error streaming file from CDN:', error);
+                    res.status(500).send('Internal Server Error');
+                });
+        });
     } catch (error) {
         console.error('Error fetching message ID:', error);
         res.status(500).send('Internal Server Error');
@@ -104,7 +119,7 @@ app.get('/attachments/:messageId/:attachmentId/:filename', async (req, res) => {
 
 app.post('/api/upload', async (req, res) => {
     // if (!req.files || !req.files.file || !req.body.mid) return res.status(400).send('No value was provided.');
-    if (req.body.mid) {
+    if (req.body?.mid) {
         // Fetch the message by ID and then set cookies
         client.channels.cache.get(Global.fileChannel).messages.fetch(req.body.mid)
             .then(message => {
