@@ -61,3 +61,7 @@ language = "nodejs"
 deploymentTarget = "cloudrun"
 build = ["sh", "-c", "npm i && npm run build-css"]
 run = ["sh", "-c", "npm run start"]
+
+[[ports]]
+localPort = 443
+externalPort = 80
