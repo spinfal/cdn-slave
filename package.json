@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/spinfal/cdn-slave#readme",
   "dependencies": {
-    "axios": "^1.6.7",
+    "axios": "^1.7.4",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "discord.js": "12.5.3",
